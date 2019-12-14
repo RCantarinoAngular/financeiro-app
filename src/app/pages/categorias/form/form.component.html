@@ -1,0 +1,54 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" routerLink='/'>Home</li>
+        <li class="breadcrumb-item">Categoria</li>
+        <li class="breadcrumb-item active">{{pageTitle}}</li>
+    </ol>
+</nav>
+<div class="row mb-4">
+    <div class="col-md">
+        <h1 class="h2 pl-2">
+            {{pageTitle}}
+        </h1>
+    </div>
+    <div class="col-md">
+        <a routerLink="/categorias" class='btn btn-light float-right'>Voltar</a>
+    </div>
+</div>
+
+<form [formGroup]='categoryForm' (submit)='submitForm()'> 
+    <div class="card">
+        <div class="card-header">
+            Dados basicos
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <label>Nome</label>
+                    <input type="text" formControlName='name' class="form-control" id="name" placeholder="Nome">
+                
+                <div class="text-danger" *ngIf="categoryForm.get('name').invalid && categoryForm.get('name').touched">
+                    <div *ngIf="categoryForm.get('name').errors.required"> informe o nome</div>
+                    <div *ngIf="categoryForm.get('name').errors.required"></div>
+                </div>
+        
+                </div>
+                <div class="col">
+                    <label>Desc</label>
+                    <input type="text" formControlName='description'  class="form-control" id='description' placeholder="descricao">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert-danger mt-4" *ngIf="serverErrorMsgs">
+        <strong>Erro no server</strong>
+       <ul>
+           <li *ngFor="let item of serverErrorMsgs">
+                    {{item}}
+           </li>
+       </ul>
+    </div>
+    <button [disabled]='submittedForm || categoryForm.invalid' type="submit" class="btn btn-primary btn-lg float-right mt-3">Salvar</button>
+
+</form>
