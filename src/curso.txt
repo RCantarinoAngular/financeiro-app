@@ -1,0 +1,18 @@
+shared module =
+
+modules compartilhados entre modules
+componentes -> footer , headers, breadcrumbs , erros , toastr
+importado apenas no module que dependa de um determinado servico
+
+
+core module =
+obrigatorios para o funcionamento do sistema
+
+services singletons
+route guard
+token services
+importado no app.module, de maneira global
+
+Modulos sempre granulares.
+
+RH - Financeiro - .....
