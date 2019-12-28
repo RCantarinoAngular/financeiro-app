@@ -44,9 +44,9 @@ export class InMemoryDatabase implements InMemoryDbService {
                     id: 2,
                     name: 'Cadernos',
                     paid: false,
-                    date: '01/01/2019',
+                    date: '01/05/2019',
                     amount: '500,00',
-                    type: 'expense',
+                    type: 'revenue',
                     description: 'Material escolar',
                     category: categorias[3],
                     categoryId: categorias[3].id

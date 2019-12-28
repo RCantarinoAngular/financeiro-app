@@ -35,7 +35,7 @@ export class FinanceiroListComponent implements OnInit {
     this.spinner.show()
 
     this.financeiroService.getAll()
-      .subscribe(itens => this.financials = itens)
+      .subscribe(itens => this.financials = itens.sort((a,b) => b.id - a.id ))
 
     this.spinner.hide()
   }

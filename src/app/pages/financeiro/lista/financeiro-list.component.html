@@ -36,11 +36,11 @@
             </td>
             <td>
                 <strong>{{ item.category.name }}</strong> <br />
-
+                   
             </td>
             <td>
-                <strong [class.text-sucess]="item.type === 'revenue'"
-                    [class.text-danger]="item.type === 'expense'">{{ item.amount }}</strong> <br />
+                <strong [class.text-success]="item.type == 'revenue'"
+                    [class.text-danger]="item.type == 'expense'">{{ item.amount }}</strong> <br />
 
               <span class="badge badge-light">
 
