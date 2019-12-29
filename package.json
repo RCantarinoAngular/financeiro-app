@@ -7,12 +7,12 @@
   },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "heroku-postbuild": "ng build --prod" 
+    "heroku-postbuild": "ng build" 
   },
   "private": true,
   "dependencies": {
