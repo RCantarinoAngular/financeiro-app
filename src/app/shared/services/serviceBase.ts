@@ -8,7 +8,8 @@ export abstract class ServiceBase<T extends ModelBase> {
 
     protected http: HttpClient
     constructor(protected apiPath: string,
-        protected injector: Injector) {
+        protected injector: Injector,
+        protected jsonDataToModelFn: (jsondata: any) => T) {
         this.http = injector.get(HttpClient)
     }
 
@@ -35,12 +36,12 @@ export abstract class ServiceBase<T extends ModelBase> {
     getAll(): Observable<T[]> {
         return this.http.get(this.apiPath).pipe(
             catchError(this.HandleError),
-            map(this.JsonToModels))
+            map(this.JsonToModels.bind(this)))
     }
     getById(id: number): Observable<T> {
         return this.http.get(`${this.apiPath}/${id}`).pipe(
             catchError(this.HandleError),
-            map(this.JsonToModel))
+            map(this.JsonToModel.bind(this)))
     }
 
     protected HandleError(error: any): Observable<any> {
@@ -51,13 +52,13 @@ export abstract class ServiceBase<T extends ModelBase> {
 
     protected JsonToModels(jsonData: any[]): T[] {
         const recs: T[] = []
-        jsonData.forEach(element => recs.push(element as T))
+        jsonData.forEach(element => recs.push(this.jsonDataToModelFn(element)))
 
         return recs
     }
 
     protected JsonToModel(jsonData: any): T {
-        return jsonData as T
+        return this.jsonDataToModelFn(jsonData)
 
     }
 

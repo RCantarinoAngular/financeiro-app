@@ -8,6 +8,6 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CategoriaService extends ServiceBase<CategoriaDTO> {
   constructor(protected injector: Injector) {
-    super('api/categorias', injector)
+    super('api/categorias', injector , CategoriaDTO.fromJson)
   }
 }

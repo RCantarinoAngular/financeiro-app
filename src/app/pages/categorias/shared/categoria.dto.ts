@@ -10,5 +10,11 @@ export class CategoriaDTO extends ModelBase {
         super()
 
 
+
+        
+    }
+
+    static fromJson(json: any): CategoriaDTO {
+        return Object.assign(new CategoriaDTO(), json)
     }
 }
