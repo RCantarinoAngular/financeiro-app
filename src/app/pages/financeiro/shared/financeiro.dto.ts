@@ -24,6 +24,9 @@ export class FinanceiroDTO extends ModelBase {
         revenue: 'Receita'
     }
 
+    static fromJson(json: any): FinanceiroDTO {
+        return Object.assign(new FinanceiroDTO(), json)
+    }
 
     get paidText(): string {
         return this.paid ? 'Pago' : 'Pendente'

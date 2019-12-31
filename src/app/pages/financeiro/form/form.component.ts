@@ -130,15 +130,15 @@ export class FormComponent implements OnInit, AfterContentChecked {
 
 
   update() {
-    let _categoria: FinanceiroDTO = Object.assign(new FinanceiroDTO(), this.FinancialForm.value)
-    this.financeiroService.update(_categoria).subscribe(
+    let _entry: FinanceiroDTO = FinanceiroDTO.fromJson(this.FinancialForm.value)
+    this.financeiroService.update(_entry).subscribe(
       cat => this.sucess(cat),
       error => this.error(error)
     )
   }
   create() {
-    let _categoria: FinanceiroDTO = Object.assign(new FinanceiroDTO(), this.FinancialForm.value)
-    this.financeiroService.create(_categoria).subscribe(
+    let _entry: FinanceiroDTO = FinanceiroDTO.fromJson(this.FinancialForm.value)
+    this.financeiroService.create(_entry).subscribe(
       cat => this.sucess(cat),
       error => this.error(error)
     )
