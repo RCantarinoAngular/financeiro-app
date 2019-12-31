@@ -1,6 +1,8 @@
 import { CategoriaDTO } from '../../categorias/shared/categoria.dto';
+import { ModelBase } from '../../../shared/models/modelBase.dto'
 
-export class FinanceiroDTO {
+
+export class FinanceiroDTO extends ModelBase {
     /**
      *
      */
@@ -15,7 +17,7 @@ export class FinanceiroDTO {
         public categoryId?: number,
         public category?: CategoriaDTO
 
-    ) { }
+    ) { super() }
 
     static types = {
         expense: 'Despesa',
