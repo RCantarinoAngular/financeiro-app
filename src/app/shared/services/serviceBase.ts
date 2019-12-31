@@ -16,12 +16,12 @@ export abstract class ServiceBase<T extends ModelBase> {
     create(resource: T): Observable<T> {
         return this.http.post(this.apiPath, resource).pipe(
             catchError(this.HandleError),
-            map(this.JsonToModel))
+            map(this.JsonToModel.bind(this)))
 
     }
 
     update(resource: T): Observable<T> {
-        return this.http.put(`${this.apiPath}/${resource.Id}`, resource).pipe(
+        return this.http.put(`${this.apiPath}/${resource.id}`, resource).pipe(
             catchError(this.HandleError),
             map(() => resource))
 

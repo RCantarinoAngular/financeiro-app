@@ -16,7 +16,7 @@
     </div>
 </div>
 
-<form [formGroup]='categoryForm' (submit)='submitForm()'> 
+<form [formGroup]='resourceForm' (submit)='submitForm()'> 
     <div class="card">
         <div class="card-header">
             Dados basicos
@@ -27,9 +27,9 @@
                     <label>Nome</label>
                     <input type="text" formControlName='name' class="form-control" id="name" placeholder="Nome">
                 
-                <div class="text-danger" *ngIf="categoryForm.get('name').invalid && categoryForm.get('name').touched">
-                    <div *ngIf="categoryForm.get('name').errors.required"> informe o nome</div>
-                    <div *ngIf="categoryForm.get('name').errors.required"></div>
+                <div class="text-danger" *ngIf="resourceForm.get('name').invalid && resourceForm.get('name').touched">
+                    <div *ngIf="resourceForm.get('name').errors.required"> informe o nome</div>
+                    <div *ngIf="resourceForm.get('name').errors.required"></div>
                 </div>
         
                 </div>
@@ -49,6 +49,6 @@
            </li>
        </ul>
     </div>
-    <button [disabled]='submittedForm || categoryForm.invalid' type="submit" class="btn btn-primary btn-lg float-right mt-3">Salvar</button>
+    <button [disabled]='submittedForm || resourceForm.invalid' type="submit" class="btn btn-primary btn-lg float-right mt-3">Salvar</button>
 
 </form>

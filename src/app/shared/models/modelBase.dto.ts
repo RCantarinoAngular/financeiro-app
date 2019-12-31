@@ -1,4 +1,4 @@
 export abstract class ModelBase {
-    Id?: number
+    id?: number
 
 }
