@@ -1,43 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { FinanceiroDTO } from '../shared/financeiro.dto';
 import { FinanceiroService } from '../shared/financeiro.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+
+
+import { BaseListComponent } from '../../../shared/components/list/baseList.component'
 
 @Component({
   selector: 'app-financeiro-list',
   templateUrl: './financeiro-list.component.html',
   styleUrls: ['./financeiro-list.component.css']
 })
-export class FinanceiroListComponent implements OnInit {
-
-  public financials: FinanceiroDTO[] = []
-  constructor(private financeiroService: FinanceiroService,
-    private spinner: NgxSpinnerService) { }
+export class FinanceiroListComponent extends BaseListComponent<FinanceiroDTO>  {
 
 
-  ngOnInit() {
-    this.getAll()
-  }
-
-  delete(financeiro) {
-
-    let conf = confirm('Deseja excluir ?')
-    if (conf) {
-      this.spinner.show()
-      this.financeiroService.delete(financeiro.id)
-        .subscribe(result => this.getAll(),
-          error => alert('erro'))
-
-    }
-  }
-
-  getAll() {
-    this.spinner.show()
-
-    this.financeiroService.getAll()
-      .subscribe(itens => this.financials = itens.sort((a,b) => b.id - a.id ))
-
-    this.spinner.hide()
+  constructor(protected financeiroService: FinanceiroService,
+    protected injector: Injector
+  ) {
+    super(financeiroService, injector)
   }
 
 }

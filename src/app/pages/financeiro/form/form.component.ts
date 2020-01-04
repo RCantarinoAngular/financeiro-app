@@ -1,28 +1,23 @@
-import { Component, OnInit, AfterContentChecked } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, Injector, OnInit } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { FinanceiroDTO } from '../shared/financeiro.dto';
-import { Router, ActivatedRoute } from '@angular/router';
+
 import { FinanceiroService } from '../shared/financeiro.service';
-import { switchMap } from 'rxjs/operators';
-import toastr from 'toastr'
+
 import { CategoriaDTO } from '../../categorias/shared/categoria.dto';
 import { CategoriaService } from '../../categorias/shared/categoria.service';
+import { BaseFormComponent } from 'src/app/shared/components/form/baseForm.component';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css']
 })
-export class FormComponent implements OnInit, AfterContentChecked {
+export class FormComponent extends BaseFormComponent<FinanceiroDTO> implements OnInit {
 
-  currentAction: string
-  FinancialForm: FormGroup
   categorias: Array<CategoriaDTO>
-  pageTitle: string
-  serverErrorMsgs: string[] = null
   submittedForm: boolean = false
   pt: any;
-  financeiro: FinanceiroDTO = new FinanceiroDTO()
   imaskConfig = {
     mask: Number,
     scale: 2,
@@ -33,15 +28,16 @@ export class FormComponent implements OnInit, AfterContentChecked {
   }
 
 
-  constructor(private financeiroService: FinanceiroService, private route: ActivatedRoute,
-    private router: Router, private formBuilder: FormBuilder
-    , private categoriaService: CategoriaService) { }
+  constructor(protected financeiroService: FinanceiroService,
+    protected categoriaService: CategoriaService,
+    protected injector: Injector) {
+    super(injector, new FinanceiroDTO, financeiroService, FinanceiroDTO.fromJson)
+  }
 
   ngOnInit() {
-    this.setCurrentAction()
-    this.buildForm()
-    this.loadFinanceiro()
+
     this.loadCategorias()
+    super.ngOnInit()
 
     this.pt = {
       firstDayOfWeek: 0,
@@ -50,7 +46,7 @@ export class FormComponent implements OnInit, AfterContentChecked {
       dayNamesMin: ["Do", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
       monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
       monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-      today: 'Today',
+      today: 'Hoje',
       clear: 'Clear',
       dateFormat: 'mm/dd/yy',
       weekHeader: 'Wk'
@@ -63,21 +59,11 @@ export class FormComponent implements OnInit, AfterContentChecked {
       cats => this.categorias = cats
     )
   }
-  private loadFinanceiro() {
-    if (this.currentAction == 'edit') {
-      this.route.paramMap.pipe(
-        switchMap(params => this.financeiroService.getById(+params.get('id'))))
-        .subscribe((category) => {
-          this.financeiro = category
-          this.FinancialForm.patchValue(this.financeiro) // bind para setar o form
-        },
-          error => alert('Error no server')
-        )
-    }
 
-  }
-  private buildForm() {
-    this.FinancialForm = this.formBuilder.group(
+
+
+  protected buildResourceForm() {
+    this.resourceForm = this.formBuilder.group(
       {
         id: [null],
         name: [null, [Validators.required, Validators.minLength(2)]],
@@ -91,34 +77,6 @@ export class FormComponent implements OnInit, AfterContentChecked {
     )
   }
 
-  private setCurrentAction() {
-    this.route.snapshot.url[0].path == 'new'
-      ? this.currentAction = 'new'
-      : this.currentAction = 'edit'
-
-  }
-
-  ngAfterContentChecked(): void {
-    this.setPageTitle()
-
-    //chamado apos que todos os evntos estiverem carregados
-  }
-  private setPageTitle() {
-    this.currentAction == 'new'
-      ? this.pageTitle = 'Cadastro de nova categoria'
-      : this.pageTitle = `Editando - ${this.financeiro.name || ''}`
-
-  }
-
-  submitForm() {
-    this.submittedForm = true
-
-    this.currentAction == 'new'
-      ? this.create()
-      : this.update()
-
-  }
-
   get TypeOptions(): Array<any> {
     return Object.entries(FinanceiroDTO.types).map(([v, t]) => {
       return {
@@ -128,37 +86,15 @@ export class FormComponent implements OnInit, AfterContentChecked {
     })
   }
 
-
-  update() {
-    let _entry: FinanceiroDTO = FinanceiroDTO.fromJson(this.FinancialForm.value)
-    this.financeiroService.update(_entry).subscribe(
-      cat => this.sucess(cat),
-      error => this.error(error)
-    )
+  protected creationPageTitle(): string {
+    return "Cadastro de Novo lancamento";
   }
-  create() {
-    let _entry: FinanceiroDTO = FinanceiroDTO.fromJson(this.FinancialForm.value)
-    this.financeiroService.create(_entry).subscribe(
-      cat => this.sucess(cat),
-      error => this.error(error)
-    )
-  }
-  error(error: any): void {
-    toastr.error('Erro ao processar requisicao')
-    this.submittedForm = false
 
-    if (error.status === 422)
-      this.serverErrorMsgs = JSON.parse(error._body).errors
-    else
-      this.serverErrorMsgs = ['Servidor fora']
-
-
+  protected editionPageTitle(): string {
+    const entryName = this.resource.name || "";
+    return "Editando Lancamento: " + entryName;
   }
-  sucess(cat: FinanceiroDTO): void {
-    toastr.success('Salvo com sucesso')
-    this.router.navigateByUrl('categorias', { skipLocationChange: true })
-      .then(() => this.router.navigate(['categorias', cat.id, 'edit']))
-  }
+
 
 }
 

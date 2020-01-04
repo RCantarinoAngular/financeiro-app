@@ -16,7 +16,7 @@
     </div>
 </div>
 
-<form [formGroup]='FinancialForm' (submit)='submitForm()'>
+<form [formGroup]='resourceForm' (submit)='submitForm()'>
     <div class="card">
         <div class="card-header">
             Informações sobre o Lançamento
@@ -38,9 +38,9 @@
                     <label for="name">Lançamento</label>
                     <input type="text" class="form-control" id="name" formControlName="name">
                     <div class="text-danger"
-                        *ngIf="FinancialForm.get('name').invalid && FinancialForm.get('name').touched">
-                        <div *ngIf="FinancialForm.get('name').errors.required"> informe o nome</div>
-                        <div *ngIf="FinancialForm.get('name').errors.required"></div>
+                        *ngIf="resourceForm.get('name').invalid && resourceForm.get('name').touched">
+                        <div *ngIf="resourceForm.get('name').errors.required"> informe o nome</div>
+                        <div *ngIf="resourceForm.get('name').errors.required"></div>
                     </div>
                 </div>
                 <!-- amount -->
@@ -68,12 +68,12 @@
                 <div class="form-group col-md-2">
                     <label for="paid">Pago</label>
                     <div class="btn-group">
-                        <label (click)="FinancialForm.get('paid').setValue(true)"
-                            [class.active]="FinancialForm.get('paid').value == true" class="btn btn-outline-info">
+                        <label (click)="resourceForm.get('paid').setValue(true)"
+                            [class.active]="resourceForm.get('paid').value == true" class="btn btn-outline-info">
                             Pago
                         </label>
-                        <label (click)="FinancialForm.get('paid').setValue(false)"
-                            [class.active]="FinancialForm.get('paid').value == false" class="btn btn-outline-info">
+                        <label (click)="resourceForm.get('paid').setValue(false)"
+                            [class.active]="resourceForm.get('paid').value == false" class="btn btn-outline-info">
                             Pendente
                         </label>
                     </div>
@@ -93,7 +93,7 @@
                 <div class="form-group col-md-7">
                     <label for="description">Descrição</label>
                     <input type="text" class="form-control" id="description" formControlName="description">
-                    <button [disabled]='submittedForm || FinancialForm.invalid' type="submit"
+                    <button [disabled]='submittedForm || resourceForm.invalid' type="submit"
                         class="btn btn-primary btn-lg float-right mt-3">Salvar</button>
                 </div>
 
@@ -104,5 +104,5 @@
 </form>
 
 <pre>
-    {{FinancialForm.value | json}}
+    {{resourceForm.value | json}}
 </pre>
