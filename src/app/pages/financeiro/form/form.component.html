@@ -1,20 +1,9 @@
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item" routerLink='/'>Home</li>
-        <li class="breadcrumb-item">Lancamentos</li>
-        <li class="breadcrumb-item active">{{pageTitle}}</li>
-    </ol>
-</nav>
-<div class="row mb-4">
-    <div class="col-md">
-        <h1 class="h2 pl-2">
-            {{pageTitle}}
-        </h1>
-    </div>
-    <div class="col-md">
-        <a routerLink="/lancamentos" class='btn btn-light float-right'>Voltar</a>
-    </div>
-</div>
+<app-bread-crumb [Itens]="[{text: 'Lancamentos', link: '/lancamento'}, {text: pageTitle}]"></app-bread-crumb>
+
+
+<app-page-header [page-title]="pageTitle" button-text="<< Voltar" button-link="/lancamentos" button-class="btn-light">
+</app-page-header>
+
 
 <form [formGroup]='resourceForm' (submit)='submitForm()'>
     <div class="card">
@@ -30,18 +19,20 @@
 
                     <select formControlName='type' class="form-control" id="type">
                         <option *ngFor="let opt of TypeOptions" [value]="opt.value">{{ opt.text }}</option>
-                  
+
                     </select>
                 </div>
 
                 <div class="form-group col-md-5">
                     <label for="name">Lançamento</label>
                     <input type="text" class="form-control" id="name" formControlName="name">
-                    <div class="text-danger"
-                        *ngIf="resourceForm.get('name').invalid && resourceForm.get('name').touched">
-                        <div *ngIf="resourceForm.get('name').errors.required"> informe o nome</div>
-                        <div *ngIf="resourceForm.get('name').errors.required"></div>
-                    </div>
+
+
+                    <app-form-error [form-control]="resourceForm.get('name')">
+                    </app-form-error>
+
+
+
                 </div>
                 <!-- amount -->
                 <div class="form-group col-md-3">
@@ -53,6 +44,9 @@
                         <input [imask]="imaskConfig" type="text" class="form-control text-right" id="amount"
                             formControlName="amount">
                     </div>
+
+                    <app-form-error [form-control]="resourceForm.get('amount')">
+                    </app-form-error>
                 </div>
 
                 <div class="form-group col-md-2">
@@ -93,16 +87,18 @@
                 <div class="form-group col-md-7">
                     <label for="description">Descrição</label>
                     <input type="text" class="form-control" id="description" formControlName="description">
-                    <button [disabled]='submittedForm || resourceForm.invalid' type="submit"
-                        class="btn btn-primary btn-lg float-right mt-3">Salvar</button>
+                    <button [disabled]="submittingForm || resourceForm.invalid" type="submit" class="btn btn-primary btn-lg float-right mt-3">
+                        Salvar
+                      </button>
                 </div>
 
+                <app-server-error-msg [server-error-messages]="serverErrorMessages"></app-server-error-msg>
 
             </div>
         </div>
     </div>
 </form>
 
-<pre>
+<!-- <pre>
     {{resourceForm.value | json}}
-</pre>
+</pre> -->

@@ -1,22 +1,10 @@
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item" routerLink='/'>Home</li>
-        <li class="breadcrumb-item">Categoria</li>
-        <li class="breadcrumb-item active">{{pageTitle}}</li>
-    </ol>
-</nav>
-<div class="row mb-4">
-    <div class="col-md">
-        <h1 class="h2 pl-2">
-            {{pageTitle}}
-        </h1>
-    </div>
-    <div class="col-md">
-        <a routerLink="/categorias" class='btn btn-light float-right'>Voltar</a>
-    </div>
-</div>
+<app-bread-crumb [Itens]="[{text: 'Categorias', link: '/categories'}, {text: pageTitle}]"></app-bread-crumb>
 
-<form [formGroup]='resourceForm' (submit)='submitForm()'> 
+
+<app-page-header [page-title]="pageTitle" button-text="<< Voltar" button-link="/categorias" button-class="btn-light">
+</app-page-header>
+
+<form [formGroup]='resourceForm' (submit)='submitForm()'>
     <div class="card">
         <div class="card-header">
             Dados basicos
@@ -26,29 +14,26 @@
                 <div class="col">
                     <label>Nome</label>
                     <input type="text" formControlName='name' class="form-control" id="name" placeholder="Nome">
-                
-                <div class="text-danger" *ngIf="resourceForm.get('name').invalid && resourceForm.get('name').touched">
-                    <div *ngIf="resourceForm.get('name').errors.required"> informe o nome</div>
-                    <div *ngIf="resourceForm.get('name').errors.required"></div>
-                </div>
-        
+
+
+                    <app-form-error [form-control]="resourceForm.get('name')">
+                    </app-form-error>
+
+
                 </div>
                 <div class="col">
                     <label>Desc</label>
-                    <input type="text" formControlName='description'  class="form-control" id='description' placeholder="descricao">
+                    <input type="text" formControlName='description' class="form-control" id='description'
+                        placeholder="descricao">
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="alert-danger mt-4" *ngIf="serverErrorMsgs">
-        <strong>Erro no server</strong>
-       <ul>
-           <li *ngFor="let item of serverErrorMsgs">
-                    {{item}}
-           </li>
-       </ul>
-    </div>
-    <button [disabled]='submittedForm || resourceForm.invalid' type="submit" class="btn btn-primary btn-lg float-right mt-3">Salvar</button>
+
+    <button [disabled]='submittedForm || resourceForm.invalid' type="submit"
+        class="btn btn-primary btn-lg float-right mt-3">Salvar</button>
+
+    <app-server-error-msg [server-error-messages]="serverErrorMessages"></app-server-error-msg>
 
 </form>

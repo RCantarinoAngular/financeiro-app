@@ -7,14 +7,18 @@ import { NgxSpinnerModule } from "ngx-spinner";
 //Quando o backend real chegar, remover essas linhas e arquivos.
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDatabase } from '../in-memory-database';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+
+import { RouterModule } from '@angular/router'
 
 @NgModule({
-  declarations: [],
+  declarations: [NavBarComponent],
   exports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NavBarComponent
     
     
   ],
@@ -24,7 +28,9 @@ import { InMemoryDatabase } from '../in-memory-database';
     BrowserAnimationsModule, 
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDatabase),
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    RouterModule
+   
   ]
 })
 export class CoreModule { }
