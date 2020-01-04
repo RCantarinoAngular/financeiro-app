@@ -31,7 +31,7 @@
     </div>
 
 
-    <button [disabled]='submittedForm || resourceForm.invalid' type="submit"
+    <button [disabled]='submittingForm || resourceForm.invalid' type="submit"
         class="btn btn-primary btn-lg float-right mt-3">Salvar</button>
 
     <app-server-error-msg [server-error-messages]="serverErrorMessages"></app-server-error-msg>
