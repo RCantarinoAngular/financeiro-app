@@ -42,16 +42,28 @@ export class InMemoryDatabase implements InMemoryDbService {
                 } as FinanceiroDTO , 
                 {
                     id: 2,
-                    name: 'Cadernos',
+                    name: 'Salario',
                     paid: false,
                     date: '01/05/2019',
                     amount: '500,00',
                     type: 'revenue',
-                    description: 'Material escolar',
+                    description: 'Salario mensal',
+                    category: categorias[2],
+                    categoryId: categorias[2].id
+
+                } as FinanceiroDTO  , 
+                {
+                    id: 2,
+                    name: 'Remedio',
+                    paid: false,
+                    date: '01/05/2019',
+                    amount: '200,00',
+                    type: 'expense',
+                    description: 'Remedio mensal',
                     category: categorias[3],
                     categoryId: categorias[3].id
 
-                } as FinanceiroDTO] 
+                } as FinanceiroDTO          ] 
 
 
 

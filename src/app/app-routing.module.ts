@@ -5,12 +5,16 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
 
   {
-    path: 'categorias', 
+    path: 'categorias',
     loadChildren: './pages/categorias/categorias.module#CategoriasModule'
   },
   {
-    path: 'lancamentos', 
+    path: 'lancamentos',
     loadChildren: './pages/financeiro/financeiro.module#FinanceiroModule'
+  },
+  {
+    path: 'reports',
+    loadChildren: './pages/reports/reports.module#ReportsModule'
   }
 
 
