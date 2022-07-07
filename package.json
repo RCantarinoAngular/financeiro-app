@@ -34,7 +34,7 @@
     "currency-formatter": "^1.5.5",
     "express": "^4.17.1",
     "jquery": "^3.4.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "ngx-spinner": "^8.1.0",
     "path": "^0.12.7",
     "primeicons": "^2.0.0",
