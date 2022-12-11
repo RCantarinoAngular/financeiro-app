@@ -32,7 +32,7 @@
     "bootstrap": "^4.4.1",
     "chart.js": "^2.9.3",
     "currency-formatter": "^1.5.5",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "jquery": "^3.4.1",
     "moment": "^2.24.0",
     "ngx-spinner": "^8.1.0",
